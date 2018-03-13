@@ -1,3 +1,3 @@
-## Balance transfer
+## 基于Node.js和MongoDB的mock工具
 
-A sample Node.js app to demonstrate **__fabric-client__** & **__fabric-ca-client__** Node.js SDK APIs
+持续完善中。。。
