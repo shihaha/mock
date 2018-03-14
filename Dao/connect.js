@@ -17,3 +17,8 @@ exports.connect = function() {
 exports.find = function(connection, query) {
     return connection.find(query);
 };
+
+// 单条插入
+exports.insertOne = function(connection, info, callback) {
+    return connection.insertOne(info, callback);
+};

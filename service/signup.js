@@ -28,3 +28,16 @@ exports.getCounterpartyList = function(req) {
         })
     })
 };
+
+exports.submitSignupInfo = function(info) {
+    return new Promise((resolve, reject) => {
+        DB.connect().then(connection => {
+            DB.insertOne(connection, info, function(err, result) {
+                if (err) throw err;
+                console.log('插入成功');
+                response.data.status = 'success';
+                resolve(response);
+            })
+        })
+    })
+};
