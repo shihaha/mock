@@ -1,5 +1,46 @@
-let DB = require('../Dao/connect.js');
+let DB = require('../Dao/db.js');
 let response = require('../model/response.js');
+
+exports.submitSignupInfo = function(info) {
+    return new Promise((resolve, reject) => {
+        DB.connect().then(connection => {
+            DB.insertOne(connection, info, function(err, result) {
+                if (err) throw err;
+                console.log('插入成功');
+                response.data.status = 'insert success';
+                resolve(response);
+            })
+        })
+    })
+};
+
+exports.deleteSignupInfo = function(whereStr) {
+    return new Promise((resolve, reject) => {
+        DB.connect().then(connection => {
+            DB.deleteOne(connection, whereStr, function(err, result) {
+                if (err) throw err;
+                console.log('删除成功');
+                response.data.status = 'delete success';
+                resolve(response);
+            })
+        })
+    })
+};
+
+exports.updateSignupInfo = function(updateObj) {
+    let whereStr = { name: '测试' };
+    let updateStr = { $set: updateObj };
+    return new Promise((resolve, reject) => {
+        DB.connect().then(connection => {
+            DB.updateOne(connection, whereStr, updateStr, function(err, result) {
+                if (err) throw err;
+                console.log('修改成功');
+                response.data.status = 'update success';
+                resolve(response);
+            })
+        })
+    })
+};
 
 exports.getCounterpartyList = function(req) {
     return new Promise((resolve, reject) => {
@@ -25,19 +66,6 @@ exports.getCounterpartyList = function(req) {
                 };
                 resolve(response);
             });
-        })
-    })
-};
-
-exports.submitSignupInfo = function(info) {
-    return new Promise((resolve, reject) => {
-        DB.connect().then(connection => {
-            DB.insertOne(connection, info, function(err, result) {
-                if (err) throw err;
-                console.log('插入成功');
-                response.data.status = 'success';
-                resolve(response);
-            })
         })
     })
 };
