@@ -1,13 +1,13 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:12345/runoob";
+const URL = "mongodb://127.0.0.1:12345/signup";
 
 // 连接数据库
-exports.connect = function() {
+exports.connect = function(coll) {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(url, function(err, db) {
+        MongoClient.connect(URL, function(err, db) {
             if (err) throw err;
-            let dbase = db.db("runoob");
-            let collection = dbase.collection('site');
+            let dbase = db.db("signup");
+            let collection = dbase.collection(coll);
             resolve(collection);
         });
     });
@@ -30,5 +30,8 @@ exports.updateOne = function(connection, whereStr, updateStr, callback) {
 
 // 模糊查询
 exports.find = function(connection, query) {
-    return connection.find(query);
+    return new Promise((resolve, reject) => {
+        let res = connection.find(query);
+        resolve(res);
+    })
 };

@@ -42,20 +42,24 @@ exports.updateSignupInfo = function(updateObj) {
     })
 };
 
-exports.getCounterpartyList = function(req) {
-    return new Promise((resolve, reject) => {
+// 使用async await改造
+exports.findSignupInfo = async function(queryObj) {
+    try {
         // 模糊查询条件开始
-        let reg = new RegExp(req.query.coreName);
-        let query = {};
-        query.name = reg;
+        let reg = new RegExp(queryObj.coreName);
+        let query = {
+            name: reg
+        };
         // 模糊查询条件结束
-        DB.connect().then(connection => { // 连接数据库
-            DB.find(connection, query).toArray(function(err, result) { // 模糊查询
+        let connection = await DB.connect('coreEnterprises'); // 连接数据库
+        let result = await DB.find(connection, query);
+        return new Promise((resolve, reject) => {
+            result.toArray(function(err, result) { // 模糊查询
                 response.data.datalist = [];
                 for (let i = 0; i < result.length; i++) {
                     let item = {};
                     item.name = result[i].name;
-                    item.number = result[i].number;
+                    item.hmA = result[i].hmA;
                     response.data.datalist.push(item);
                 }
                 response.data.pagecond = {
@@ -67,5 +71,7 @@ exports.getCounterpartyList = function(req) {
                 resolve(response);
             });
         })
-    })
+    } catch (err) {
+        console.log(err);
+    }
 };
