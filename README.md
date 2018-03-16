@@ -1,7 +1,7 @@
 ## 基于Node.js和MongoDB的mock工具 ##
 
 技术点：
-	Nodejs(Express)
-	MongoDB
-	Promise
-	async await
+	1.Nodejs(Express)
+	2.MongoDB
+	3.Promise
+	4.async await
