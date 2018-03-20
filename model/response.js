@@ -1,9 +1,6 @@
-// 返回体格式
-let response = {
-    code: '0',
-    data: {
-
-    },
-    message: '成功'
+// response的构造函数
+module.exports = function() {
+    this.code = '0';
+    this.data = {};
+    this.message = '';
 };
-module.exports = response;

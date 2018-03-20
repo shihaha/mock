@@ -1,5 +1,5 @@
 let DB = require('../Dao/db.js');
-let response = require('../model/response.js');
+let Response = require('../model/response.js');
 
 exports.submitSignupInfo = function(info) {
     return new Promise((resolve, reject) => {
@@ -7,6 +7,7 @@ exports.submitSignupInfo = function(info) {
             DB.insertOne(connection, info, function(err, result) {
                 if (err) throw err;
                 console.log('插入成功');
+                let response = new Response();
                 response.data.status = 'insert success';
                 resolve(response);
             })
@@ -20,6 +21,7 @@ exports.deleteSignupInfo = function(whereStr) {
             DB.deleteOne(connection, whereStr, function(err, result) {
                 if (err) throw err;
                 console.log('删除成功');
+                let response = new Response();
                 response.data.status = 'delete success';
                 resolve(response);
             })
@@ -35,6 +37,7 @@ exports.updateSignupInfo = function(updateObj) {
             DB.updateOne(connection, whereStr, updateStr, function(err, result) {
                 if (err) throw err;
                 console.log('修改成功');
+                let response = new Response();
                 response.data.status = 'update success';
                 resolve(response);
             })
@@ -55,6 +58,8 @@ exports.findSignupInfo = async function(queryObj) {
         let result = await DB.find(connection, query);
         return new Promise((resolve, reject) => {
             result.toArray(function(err, result) { // 模糊查询
+                if (err) reject(err);
+                let response = new Response();
                 response.data.datalist = [];
                 for (let i = 0; i < result.length; i++) {
                     let item = {};
